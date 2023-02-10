@@ -6,6 +6,12 @@ import { initBuffers } from "./init-buffers";
 type ProgramInfo = ReturnType<typeof getSimpleShaderProgramInfo>;
 type Buffers = Awaited<ReturnType<typeof initBuffers>>;
 
+const fieldOfView = (60 * Math.PI) / 180;
+const zNear = 0.1;
+const zFar = 100.0;
+const projectionMatrix = mat4.create();
+const modelViewMatrix = mat4.create();
+
 function setPositionAttribute(
   gl: WebGLRenderingContext,
   buffers: Buffers,
@@ -60,21 +66,18 @@ export function drawScene(
 
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  const fieldOfView = (60 * Math.PI) / 180;
   const aspect = gl.canvas.width / gl.canvas.height;
-  const zNear = 0.1;
-  const zFar = 100.0;
 
-  const projectionMatrix = mat4.create();
   mat4.perspective(projectionMatrix, fieldOfView, aspect, zNear, zFar);
 
-  const modelViewMatrix = mat4.create();
+  mat4.identity(modelViewMatrix);
   mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -6.0]);
   mat4.rotateY(modelViewMatrix, modelViewMatrix, delta / 2);
   mat4.rotateX(modelViewMatrix, modelViewMatrix, delta);
 
   setPositionAttribute(gl, buffers, programInfo);
   setColorAttribute(gl, buffers, programInfo);
+
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indicies);
 
   gl.useProgram(programInfo.program);
