@@ -78,7 +78,3 @@ body {
   display: grid;
   place-content: center;
 }
-
-#viewport {
-  border: thin solid gold;
-}

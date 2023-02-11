@@ -59,7 +59,7 @@ export function drawScene(
   buffers: Buffers,
   delta: number = 0
 ) {
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clearColor(0.1, 0.2, 0.3, 1.0);
   gl.clearDepth(1.0);
   gl.enable(gl.DEPTH_TEST);
   gl.depthFunc(gl.LEQUAL);
@@ -78,7 +78,7 @@ export function drawScene(
   setPositionAttribute(gl, buffers, programInfo);
   setColorAttribute(gl, buffers, programInfo);
 
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indicies);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
 
   gl.useProgram(programInfo.program);
 

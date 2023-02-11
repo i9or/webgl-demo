@@ -57,7 +57,7 @@ function initShaderProgram(
   return shaderProgram;
 }
 
-(async function () {
+async function main() {
   const canvas: Nullable<HTMLCanvasElement> =
     document.querySelector("#viewport");
 
@@ -90,4 +90,6 @@ function initShaderProgram(
   }
 
   requestAnimationFrame(render);
-})();
+}
+
+window.onload = main;
