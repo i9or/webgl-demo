@@ -4,6 +4,7 @@ import fsSimple from "./simple.frag?raw";
 import { getSimpleShaderProgramInfo } from "./simple-shader-program-info";
 import { initBuffers } from "./init-buffers";
 import { drawScene } from "./draw-scene";
+import { loadTexture } from "./texture";
 
 function loadShader(gl: WebGLRenderingContext, type: GLenum, source: string) {
   const shader = gl.createShader(type);
@@ -74,6 +75,11 @@ async function main() {
   const simpleShaderProgram = initShaderProgram(gl, vsSimple, fsSimple);
   const programInfo = getSimpleShaderProgramInfo(gl, simpleShaderProgram);
   const buffers = await initBuffers(gl);
+  const texture = await loadTexture(gl, "/crate.png");
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, texture);
 
   let previousDelta = 0;
   let rotation = 0;
